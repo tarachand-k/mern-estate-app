@@ -50,6 +50,18 @@
           gap: 18px;
         }
 
+        button {
+          width: 100px;
+          background-color: teal;
+          border: none;
+          color: white;
+          padding: 8px 14px;
+          cursor: pointer;
+          font-size: 1.6rem;
+          margin-top: 8px;
+          border-radius: 6px;
+        }
+
         img {
           width: 38px;
           height: 38px;

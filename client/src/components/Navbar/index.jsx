@@ -1,10 +1,13 @@
 import { useState } from "react";
 import "./index.scss";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const user = true;
+  const { user } = useAuth();
+
+  console.log(user);
 
   function handleToggleMenu() {
     setIsMenuOpen((curr) => !curr);
@@ -26,11 +29,8 @@ function Navbar() {
         {user ? (
           <>
             <div className="user">
-              <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt=""
-              />
-              <span>John Doe</span>
+              <img src={user.avatar || "/noavatar.jpg"} alt="" />
+              <span>{user.username}</span>
             </div>
             <Link to="/profile" className="profile-btn">
               <div className="notification">3</div>
@@ -39,10 +39,10 @@ function Navbar() {
           </>
         ) : (
           <>
-            <a href="/sign-in" className="login">
+            <a href="/sign-in" className="login-btn">
               Sign in
             </a>
-            <a href="/sign-up" className="register">
+            <a href="/sign-up" className="register-btn">
               Sign up
             </a>
           </>

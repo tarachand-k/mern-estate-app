@@ -1,8 +1,28 @@
+import { useState } from "react";
 import Chat from "../../components/chat";
 import List from "../../components/list";
+import apiRequest from "../../lib/api-requests";
 import "./index.scss";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth } from "../../context/AuthProvider";
 
 function Profile() {
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const { user, updateUser } = useAuth();
+
+  async function handleLogout() {
+    setIsLoading(true);
+    try {
+      await apiRequest.post("/auth/logout");
+      updateUser(null);
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(true);
+    }
+  }
   return (
     <div className="profile-page">
       <div className="details">
@@ -10,22 +30,23 @@ function Profile() {
           <div className="detail">
             <div className="title">
               <h2>User Information</h2>
-              <button>Update Profile</button>
+              <Link to="/profile/update">
+                <button>Update Profile</button>
+              </Link>
             </div>
             <div className="info">
               <span>
-                Avatar:{" "}
-                <img
-                  src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                  alt=""
-                />
+                Avatar: <img src={user.avatar || "/noavatar.jpg"} alt="" />
               </span>
               <span>
-                Username: <b>John Doe</b>
+                Username: <b>{user.username}</b>
               </span>
               <span>
-                Email: <b>john@gmail.com</b>
+                Email: <b>{user.email}</b>
               </span>
+              <button disabled={isLoading} onClick={handleLogout}>
+                Logout
+              </button>
             </div>
           </div>
           <div className="detail">
