@@ -1,0 +1,181 @@
+@import "../../responsive.scss";
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100px;
+
+  a {
+    transition: all 0.2s ease-in;
+
+    @include sm {
+      display: none;
+    }
+
+    &:hover {
+      scale: 1.05;
+    }
+  }
+
+  .left {
+    flex: 3;
+    display: flex;
+    align-items: center;
+    gap: 50px;
+
+    .logo {
+      font-weight: bold;
+      font-size: 2rem;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+
+      img {
+        width: 28px;
+      }
+
+      span {
+        @include md {
+          display: none;
+        }
+
+        @include sm {
+          display: initial;
+        }
+      }
+    }
+
+    @include md {
+      gap: 30px;
+    }
+  }
+
+  .right {
+    flex: 2;
+    text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    background-color: #fcf5f3;
+    height: 100%;
+
+    a {
+      padding: 12px 24px;
+      margin: 20px;
+
+      @include md {
+        margin: 0;
+        margin-right: 20px;
+      }
+    }
+
+    .user {
+      display: flex;
+      align-items: center;
+      font-weight: bold;
+      margin-right: 18px;
+
+      img {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 8px;
+      }
+
+      @include sm {
+        margin-right: 12px;
+
+        span {
+          display: none;
+        }
+      }
+    }
+    .profile-btn {
+      padding: 12px 24px;
+      background-color: #fece51;
+      cursor: pointer;
+      border: none;
+      display: block;
+      position: relative;
+
+      .notification {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: orangered;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+
+      @include sm {
+        display: none;
+      }
+    }
+
+    .register {
+      background-color: #fece51;
+    }
+
+    .menuIcon {
+      display: none;
+      z-index: 30;
+
+      img {
+        width: 36px;
+        height: 36px;
+        cursor: pointer;
+      }
+
+      @include sm {
+        display: initial;
+      }
+    }
+
+    .menu {
+      font-size: 2rem;
+      background-color: black;
+      color: white;
+      height: 100vh;
+      width: 50%;
+      z-index: 20;
+
+      position: absolute;
+      top: 0;
+      right: -50%;
+
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 32px;
+      transition: all 0.5s ease;
+
+      a {
+        display: initial;
+      }
+
+      &.open {
+        right: 0;
+      }
+
+      @include sm {
+        display: flex;
+      }
+    }
+
+    @include md {
+      background-color: transparent;
+    }
+  }
+
+  @include sm {
+    height: 80px;
+  }
+}

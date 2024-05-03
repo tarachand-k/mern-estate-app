@@ -1,0 +1,143 @@
+@import "../../responsive.scss";
+
+.chat {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 24px;
+
+  .messages {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-right: 8px;
+    overflow-y: scroll;
+    scrollbar-color: rgba(254, 205, 81, 0.23) #fcf5f3;
+
+    h2 {
+      font-weight: 600;
+    }
+
+    .message {
+      background-color: white;
+      padding: 18px;
+      border-radius: 9px;
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      cursor: pointer;
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        span {
+          font-weight: bold;
+        }
+      }
+
+      img {
+        width: 38px;
+        height: 38px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+    }
+  }
+
+  .chat-message-box {
+    // flex: 1;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      background-color: #f7c14b85;
+      padding: 18px;
+      font-weight: bold;
+      align-items: center;
+
+      .user {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+
+        img {
+          width: 38px;
+          height: 38px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+      .close {
+        cursor: pointer;
+      }
+    }
+    .center {
+      flex: 1;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      overflow-y: scroll;
+
+      .chat-message {
+        width: 50%;
+
+        &.own {
+          align-self: flex-end;
+          text-align: right;
+        }
+
+        span {
+          font-size: 1.2rem;
+          background-color: #f7c14b85;
+          padding: 2px;
+          border-radius: 6px;
+        }
+      }
+
+      @include md {
+        flex: none;
+        height: 350px;
+      }
+    }
+    .bottom {
+      border-top: 2px solid #f7c14b85;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      textarea {
+        flex: 3;
+        height: 100%;
+        border: none;
+        padding: 18px;
+      }
+      button {
+        flex: 1;
+        background-color: #f7c14b85;
+        height: 100%;
+        border: none;
+        cursor: pointer;
+        font-size: 1.6rem;
+      }
+    }
+
+    @include md {
+      flex: 1;
+    }
+  }
+
+  @include md {
+    padding-top: 32px;
+    padding-bottom: 32px;
+  }
+}

@@ -1,0 +1,89 @@
+@import "../../responsive.scss";
+
+.search-bar {
+  .type {
+    button {
+      padding: 16px 32px;
+      border: 1px solid #999;
+      border-bottom: none;
+      text-transform: capitalize;
+      cursor: pointer;
+      background-color: white;
+
+      &:first-child {
+        border-top-left-radius: 6px;
+        border-right: none;
+      }
+
+      &:last-child {
+        border-top-right-radius: 6px;
+        border-left: none;
+      }
+
+      &.active {
+        background-color: black;
+        padding-bottom: 17px;
+        color: white;
+        border-bottom: none;
+      }
+    }
+  }
+
+  form {
+    border: 1px solid #999;
+    display: flex;
+    justify-content: space-between;
+    height: 64px;
+    gap: 5px;
+    overflow: hidden;
+    border-radius: 6px;
+    border-top-left-radius: 0px;
+    border-top-right-radius: 0px;
+
+    input {
+      border: none;
+      padding: 0px 10px 0px 16px;
+
+      &:first-child {
+        flex: 2;
+      }
+
+      &[type="number"] {
+        flex: 1.1;
+      }
+
+      @include sm {
+        padding: 20px 10px 20px 10px;
+        border: 1px solid #999;
+      }
+    }
+
+    button {
+      border: none;
+      cursor: pointer;
+      background-color: #fece51;
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 64px;
+      padding: 6px;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+
+      @include sm {
+        max-width: 100%;
+        padding: 10px;
+      }
+    }
+
+    @include sm {
+      height: auto;
+      flex-direction: column;
+      border: none;
+    }
+  }
+}

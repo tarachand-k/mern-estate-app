@@ -1,0 +1,36 @@
+@import "../../responsive.scss";
+.listings {
+  display: flex;
+  height: 100%;
+  overflow-y: scroll;
+
+  .list-content-box {
+    flex: 3;
+    height: 100%;
+
+    .wrapper {
+      height: 100%;
+      padding-right: 50px;
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      overflow-y: scroll;
+      padding-bottom: 50px;
+    }
+
+    @include md {
+      flex: none;
+      height: max-content;
+    }
+  }
+
+  .map-box {
+    flex: 2;
+    background-color: #fcf5f3;
+    height: 100%;
+
+    @include md {
+      display: none;
+    }
+  }
+}

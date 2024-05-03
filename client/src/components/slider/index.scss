@@ -1,0 +1,118 @@
+@import "../../responsive.scss";
+
+.slider {
+  display: flex;
+  width: 100%;
+  height: 350px;
+  gap: 18px;
+  margin-bottom: 48px;
+
+  .full-slider {
+    position: absolute;
+    padding: 32px 0;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    background-color: #fcf5f3;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    z-index: 40;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .arrow {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        width: 24px;
+
+        &.right {
+          transform: rotate(180deg);
+        }
+
+        @include md {
+          width: 16px;
+        }
+
+        @include sm {
+          width: 12px;
+        }
+      }
+    }
+
+    .img-box {
+      flex: 10;
+
+      img {
+        width: 100%;
+        height: 100%;
+        max-height: 80vh;
+        object-fit: cover;
+      }
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 16px;
+      right: 24px;
+      font-size: 2.4rem;
+      font-weight: 600;
+      color: white;
+      cursor: pointer;
+
+      @include sm {
+        font-size: 1.6rem;
+      }
+    }
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 9px;
+    cursor: pointer;
+  }
+  .main-img-box {
+    flex: 3;
+
+    @include sm {
+      flex: none;
+    }
+  }
+
+  .other-imgs-box {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 18px;
+
+    img {
+      height: 100px;
+    }
+
+    @include sm {
+      flex: none;
+      flex-direction: row;
+      gap: 8px;
+
+      img {
+        height: 60px;
+      }
+    }
+  }
+
+  @include sm {
+    flex-direction: column;
+    height: auto;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+}
