@@ -1,12 +1,15 @@
-import { listData } from "../../lib/dummyData";
 import Card from "../card";
 import "./index.scss";
 
-function List() {
-  const data = listData;
+function List({ posts }) {
+  if (posts.length === 0)
+    return (
+      <p>No post created yet. Click on `Create New Post` button to create</p>
+    );
+
   return (
     <div className="list">
-      {data.map((item) => (
+      {posts.map((item) => (
         <Card key={item.id} item={item} />
       ))}
     </div>

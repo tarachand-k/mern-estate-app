@@ -89,6 +89,8 @@
 
       .chat-message {
         width: 50%;
+        align-self: flex-start;
+        text-align: left;
 
         &.own {
           align-self: flex-end;

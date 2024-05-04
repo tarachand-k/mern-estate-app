@@ -1,33 +1,64 @@
-import { singlePostData, userData } from "../../lib/dummyData";
+import { useLoaderData, useNavigate } from "react-router-dom";
+import DOMPurify from "dompurify";
 
 import Slider from "../../components/slider";
 import "./index.scss";
 import Map from "../../components/map";
+import { useAuth } from "../../context/AuthProvider";
+import apiRequests from "../../lib/api-requests";
+import { useState } from "react";
 
 function SingalPage() {
-  const data = singlePostData;
+  const { post } = useLoaderData();
+  const [saved, setSaved] = useState(post.isSaved || false);
+  const { user: currentUser } = useAuth();
+  const navigate = useNavigate();
+
+  const postDetail = post.postDetail;
+  const user = post.user;
+
+  async function handleSavePost() {
+    if (!currentUser) navigate("/sign-in");
+
+    setSaved((curr) => !curr);
+    try {
+      await apiRequests.post(
+        "/users/save",
+        { postId: post.id },
+        { withCredentials: true }
+      );
+    } catch (err) {
+      console.log(err);
+      setSaved((curr) => !curr);
+    }
+  }
 
   return (
     <div className="singal-page">
       <div className="details">
         <div className="wrapper">
-          <Slider images={data.images} />
+          <Slider images={post.images} />
           <div className="info">
             <div className="top">
               <div className="post">
-                <h1>{data.title}</h1>
+                <h1>{post.title}</h1>
                 <div className="address">
                   <img src="/pin.png" alt="" />
-                  <span>{data.address}</span>
+                  <span>{post.address}</span>
                 </div>
-                <p className="price">${data.price}</p>
+                <p className="price">${post.price}</p>
               </div>
               <div className="user">
-                <img src={userData.img} alt="" />
-                <span>{userData.name}</span>
+                <img src={user.avatar || "/noavatar.png"} alt="" />
+                <span>{user.username}</span>
               </div>
             </div>
-            <p className="bottom">{data.description}</p>
+            <div
+              className="bottom"
+              dangerouslySetInnerHTML={{
+                __html: DOMPurify.sanitize(postDetail.desc),
+              }}
+            ></div>
           </div>
         </div>
       </div>
@@ -40,21 +71,25 @@ function SingalPage() {
                 <img src="/utility.png" alt="" />
                 <div className="feature-text">
                   <h3>Utilities</h3>
-                  <p>Renter is responsible</p>
+                  <p>
+                    {postDetail.utilities === "owner"
+                      ? "Owner is responsible"
+                      : "Tenant is responsible"}
+                  </p>
                 </div>
               </div>
               <div className="feature">
                 <img src="/pet.png" alt="" />
                 <div className="feature-text">
                   <h3>Pet Policy</h3>
-                  <p>Pets Allowed</p>
+                  <p>{postDetail.pet ? "Pets" : "Pets not"} Allowed</p>
                 </div>
               </div>
               <div className="feature">
                 <img src="/fee.png" alt="" />
                 <div className="feature-text">
-                  <h3>Property Fees</h3>
-                  <p>Must have 3x the rent in total household income</p>
+                  <h3>Income Policy</h3>
+                  <p>{postDetail.income}</p>
                 </div>
               </div>
             </div>
@@ -64,15 +99,15 @@ function SingalPage() {
             <div className="sizes">
               <div className="size">
                 <img src="/size.png" alt="" />
-                <span>80 sqft</span>
+                <span>{postDetail.size} sqft</span>
               </div>
               <div className="size">
                 <img src="/bed.png" alt="" />
-                <span>2 beds</span>
+                <span>{post.bedroom || 1} beds</span>
               </div>
               <div className="size">
                 <img src="/bath.png" alt="" />
-                <span>1 bathroom</span>
+                <span>{post.bathroom || 1} bathroom</span>
               </div>
             </div>
           </div>
@@ -83,21 +118,21 @@ function SingalPage() {
                 <img src="/school.png" alt="" />
                 <div className="feature-text">
                   <h3>School</h3>
-                  <p>250m away</p>
+                  <p>{postDetail.school}m away</p>
                 </div>
               </div>
               <div className="feature">
                 <img src="/bus.png" alt="" />
                 <div className="feature-text">
                   <h3>Bus Stop</h3>
-                  <p>100m away</p>
+                  <p>{postDetail.bus}m away</p>
                 </div>
               </div>
               <div className="feature">
                 <img src="/restaurant.png" alt="" />
                 <div className="feature-text">
                   <h3>Restaurant</h3>
-                  <p>200m away</p>
+                  <p>{postDetail.restaurant}m away</p>
                 </div>
               </div>
             </div>
@@ -105,7 +140,7 @@ function SingalPage() {
           <div className="feature-box">
             <h2 className="title">Location</h2>
             <div className="map-box">
-              <Map items={[data]} />
+              <Map items={[post]} />
             </div>
           </div>
           <div className="buttons">
@@ -113,9 +148,14 @@ function SingalPage() {
               <img src="/chat.png" alt="" />
               <span>Send a message</span>
             </button>
-            <button>
+            <button
+              onClick={handleSavePost}
+              style={{
+                backgroundColor: saved ? "#fece51" : "white",
+              }}
+            >
               <img src="/save.png" alt="" />
-              <span>Save the place</span>
+              <span>{saved ? "Place Saved" : "Save the place"}</span>
             </button>
           </div>
         </div>

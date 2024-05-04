@@ -7,6 +7,12 @@ import Register from "./pages/register";
 import SingalPage from "./pages/singal-page";
 import Profile from "./pages/profile";
 import ProfileUpdatePage from "./pages/profile-update";
+import CreaetPost from "./pages/create-post";
+import {
+  listingsLoader,
+  profilePageLoader,
+  singalPageLoader,
+} from "./lib/loaders";
 
 function App() {
   const router = createBrowserRouter([
@@ -20,12 +26,14 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/list",
+          path: "/listings",
           element: <Listings />,
+          loader: listingsLoader,
         },
         {
           path: "/:id",
           element: <SingalPage />,
+          loader: singalPageLoader,
         },
         {
           path: "/sign-in",
@@ -46,10 +54,15 @@ function App() {
         {
           path: "/profile",
           element: <Profile />,
+          loader: profilePageLoader,
         },
         {
           path: "/profile/update",
           element: <ProfileUpdatePage />,
+        },
+        {
+          path: "/create-post",
+          element: <CreaetPost />,
         },
       ],
     },

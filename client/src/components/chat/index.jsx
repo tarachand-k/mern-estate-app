@@ -1,114 +1,103 @@
 import { useState } from "react";
-import "./index.scss";
+import { format } from "timeago.js";
 
-function Chat() {
-  const [chat, setChat] = useState(true);
+import "./index.scss";
+import { useAuth } from "../../context/AuthProvider";
+import apiRequests from "../../lib/api-requests";
+
+function Chat({ chats }) {
+  const [currChat, setCurrChat] = useState(null);
+  const { user } = useAuth();
+  console.log(chats);
+
+  async function handleOpenChat(chatId, reciever) {
+    try {
+      const chat = await apiRequests.get(`/chats/${chatId}`, {
+        withCredentials: true,
+      });
+      setCurrChat({ ...chat.data.chat, reciever });
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    const formData = new FormData(event.target);
+    const text = formData.get("text");
+    if (!text) return;
+
+    try {
+      const res = await apiRequests.post(
+        "/messages/" + currChat.id,
+        { text },
+        {
+          withCredentials: true,
+        }
+      );
+      setCurrChat((curr) => ({
+        ...curr,
+        messages: [...curr.messages, res.data.message],
+      }));
+      event.target.reset();
+    } catch (err) {
+      console.log(err);
+    }
+  }
+  console.log(currChat);
 
   return (
     <div className="chat">
       <div className="messages">
         <h2>Messages</h2>
-        <div className="message">
-          <div className="user">
-            <img
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt=""
-            />
-            <span>John Doe</span>
+        {chats.map((chat) => (
+          <div
+            key={chat.id}
+            className="message"
+            onClick={() => handleOpenChat(chat.id, chat.reciever)}
+            style={{
+              backgroundColor: chat.seenBy.includes(user.id)
+                ? "white"
+                : "#fecd514e",
+            }}
+          >
+            <div className="user">
+              <img src={chat.reciever.avatar || "/noavatar.jpg"} alt="" />
+              <span>{chat.reciever.username}</span>
+            </div>
+            <p>{chat.lastMessage}</p>
           </div>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <div className="user">
-            <img
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt=""
-            />
-            <span>John Doe</span>
-          </div>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <div className="user">
-            <img
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt=""
-            />
-            <span>John Doe</span>
-          </div>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
-        <div className="message">
-          <div className="user">
-            <img
-              src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-              alt=""
-            />
-            <span>John Doe</span>
-          </div>
-          <p>Lorem ipsum dolor sit amet...</p>
-        </div>
+        ))}
       </div>
-      {chat && (
+      {currChat && (
         <div className="chat-message-box">
           <div className="top">
             <div className="user">
-              <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt=""
-              />
-              <span>John Doe</span>
+              <img src={currChat.reciever.avatar || "/noavatar.jpg"} alt="" />
+              <span>{currChat.reciever.username}</span>
             </div>
-            <span className="close" onClick={() => setChat(null)}>
+            <span className="close" onClick={() => setCurrChat(null)}>
               X
             </span>
           </div>
           <div className="center">
-            <div className="chat-message">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message own">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message own">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message own">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message own">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
-            <div className="chat-message own">
-              <p>Lorem ipsum dolor sit amet.</p>
-              <span>1 hour ago</span>
-            </div>
+            {currChat.messages.map((message) => (
+              <div
+                key={message.id}
+                className={`chat-message ${
+                  message.userId === user.id ? "own" : undefined
+                }`}
+              >
+                <p>{message.text}</p>
+                <span>{format(message.createdAt)}</span>
+              </div>
+            ))}
           </div>
-          <div className="bottom">
-            <textarea></textarea>
+          <form onSubmit={handleSubmit} className="bottom">
+            <textarea name="text"></textarea>
             <button>Send</button>
-          </div>
+          </form>
         </div>
       )}
     </div>

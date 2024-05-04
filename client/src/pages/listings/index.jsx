@@ -1,24 +1,44 @@
 import "./index.scss";
-import { listData } from "../../lib/dummyData";
 import Filter from "../../components/Filter";
 import Card from "../../components/card";
 import Map from "../../components/map";
+import { Await, useLoaderData } from "react-router-dom";
+import { Suspense } from "react";
 
 function Listings() {
-  const data = listData;
+  const { postResponse } = useLoaderData();
 
   return (
     <div className="listings">
       <div className="list-content-box">
         <div className="wrapper">
           <Filter />
-          {data.map((item) => (
-            <Card key={item.id} item={item} />
-          ))}
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await
+              resolve={postResponse}
+              errorElement={<p>Error loading posts</p>}
+            >
+              {(postResponse) => {
+                console.log(postResponse);
+                return postResponse.data.posts.map((item) => (
+                  <Card key={item.id} item={item} />
+                ));
+              }}
+            </Await>
+          </Suspense>
         </div>
       </div>
       <div className="map-box">
-        <Map items={data} scrollWheelZoom={true} />
+        <Suspense fallback={<p>Loading...</p>}>
+          <Await
+            resolve={postResponse}
+            errorElement={<p>Error loading posts</p>}
+          >
+            {(postResponse) => (
+              <Map items={postResponse.data.posts} scrollWheelZoom={true} />
+            )}
+          </Await>
+        </Suspense>
       </div>
     </div>
   );

@@ -20,7 +20,7 @@ function Register() {
 
     setIsLoading(true);
     try {
-      const res = await apiRequest.post("/auth/login", {
+      const res = await apiRequest.post("/auth/register", {
         username,
         email,
         password,
