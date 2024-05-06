@@ -1,3 +1,5 @@
+@import "../../responsive.scss";
+
 .profileUpdatePage {
   height: 100%;
   display: flex;
@@ -42,6 +44,12 @@
         cursor: pointer;
       }
     }
+
+    @include md {
+      flex: none;
+      height: max-content;
+      padding-bottom: 48px;
+    }
   }
 
   .sideContainer {
@@ -56,6 +64,18 @@
     .avatar {
       width: 50%;
       object-fit: cover;
+      border-radius: 6px;
     }
+    @include md {
+      padding: 48px 0;
+      flex: none;
+      height: max-content;
+    }
+  }
+
+  @include md {
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    gap: 48px;
   }
 }

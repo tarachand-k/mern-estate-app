@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import SearchBar from "../../components/SearchBar";
 import "./index.scss";
 
@@ -6,11 +7,13 @@ function Home() {
     <div className="home">
       <div className="content-box">
         <div className="pad-wrapper">
-          <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
-          <p className="description">
-            Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit
-            corporis aspernatur recusandae quod porro, laboriosam mollitia
-          </p>
+          <div>
+            <h1 className="title">Find Real Estate & Get Your Dream Place</h1>
+            <p className="description">
+              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Velit
+              corporis aspernatur recusandae quod porro, laboriosam mollitia
+            </p>
+          </div>
           <SearchBar />
           <div className="stats">
             <div className="box">
@@ -26,6 +29,10 @@ function Home() {
               <p>Property Ready</p>
             </div>
           </div>
+
+          <Link to={"/listings"} className="btn-cta">
+            See all listings &rarr;
+          </Link>
         </div>
       </div>
       <div className="img-box">

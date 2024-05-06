@@ -17,6 +17,21 @@ function SingalPage() {
   const postDetail = post.postDetail;
   const user = post.user;
 
+  async function handleSendMessage() {
+    if (!currentUser) navigate("/sign-in");
+
+    try {
+      await apiRequests.post(
+        "/chats",
+        { recieverId: user.id },
+        { withCredentials: true }
+      );
+      navigate("/profile");
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   async function handleSavePost() {
     if (!currentUser) navigate("/sign-in");
 
@@ -144,7 +159,7 @@ function SingalPage() {
             </div>
           </div>
           <div className="buttons">
-            <button>
+            <button onClick={handleSendMessage}>
               <img src="/chat.png" alt="" />
               <span>Send a message</span>
             </button>

@@ -22,11 +22,7 @@ export async function profilePageLoader() {
   const postPromise = apiRequests.get("/users/profilePosts", {
     withCredentials: true,
   });
-  const chatPromise = apiRequests.get("/chats", {
-    withCredentials: true,
-  });
   return defer({
     postResponse: postPromise,
-    chatResponse: chatPromise,
   });
 }

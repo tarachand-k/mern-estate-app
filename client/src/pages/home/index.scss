@@ -15,11 +15,16 @@
       justify-content: center;
       gap: 48px;
 
-      title {
+      .title {
         font-size: 6.4rem;
+        margin-bottom: 18px;
 
         @include lg {
           font-size: 4.8rem;
+        }
+
+        @media (max-width: 400px) {
+          font-size: 3.6rem;
         }
       }
 
@@ -45,6 +50,29 @@
         }
       }
 
+      .btn-cta {
+        align-self: flex-end;
+        text-align: center;
+        width: 30%;
+        padding: 12px 24px;
+        border: none;
+        border-radius: 6px;
+        background-color: #fece51;
+        color: white;
+        cursor: pointer;
+        font-size: 1.6rem;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          transform: scale(1.02);
+        }
+
+        @include sm {
+          width: 50%;
+          padding: 12px;
+        }
+      }
+
       @include md {
         padding-right: 0;
       }
@@ -53,6 +81,11 @@
         margin-top: 18px;
         justify-content: flex-start;
         gap: 42px;
+      }
+
+      @media (max-width: 400px) {
+        justify-content: center;
+        margin-top: 0px;
       }
     }
   }

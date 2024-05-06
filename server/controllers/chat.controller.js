@@ -38,6 +38,16 @@ export const getChat = async (req, res) => {
   const userId = req.userId;
 
   try {
+    await prisma.chat.update({
+      where: {
+        id,
+      },
+      data: {
+        seenBy: {
+          push: [userId],
+        },
+      },
+    });
     const chat = await prisma.chat.findUnique({
       where: {
         id,
@@ -54,16 +64,8 @@ export const getChat = async (req, res) => {
       },
     });
 
-    await prisma.chat.update({
-      where: {
-        id,
-      },
-      data: {
-        seenBy: {
-          push: [userId],
-        },
-      },
-    });
+    console.log(chat);
+
     res.status(200).json({ success: true, chat });
   } catch (error) {
     console.log(error);

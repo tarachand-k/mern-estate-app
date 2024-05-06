@@ -1,13 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./index.scss";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthProvider";
+import { useNotificationStore } from "../../lib/notification-store";
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { user } = useAuth();
 
-  console.log(user);
+  const number = useNotificationStore((state) => state.number);
+  console.log(number);
+  const fetch = useNotificationStore((state) => state.fetch);
+
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   function handleToggleMenu() {
     setIsMenuOpen((curr) => !curr);
@@ -18,7 +25,7 @@ function Navbar() {
       <div className="left">
         <a className="logo">
           <img src="/logo.png" alt="logo" />
-          <span>TaraEstate</span>
+          <span>Estate</span>
         </a>
         <a href="/">Home</a>
         <a href="/">About</a>
@@ -28,12 +35,12 @@ function Navbar() {
       <div className="right">
         {user ? (
           <>
-            <div className="user">
+            <Link className="user" to={"/profile"}>
               <img src={user.avatar || "/noavatar.jpg"} alt="" />
               <span>{user.username}</span>
-            </div>
+            </Link>
             <Link to="/profile" className="profile-btn">
-              <div className="notification">3</div>
+              {number > 0 && <div className="notification">{number}</div>}
               <span>Profile</span>
             </Link>
           </>
@@ -55,8 +62,25 @@ function Navbar() {
           <a href="/">About</a>
           <a href="/">Contact</a>
           <a href="/">Agents</a>
-          <a href="/sign-in">Sign in</a>
-          <a href="/sign-up">Sign up</a>
+          {user ? (
+            <Link
+              to="/profile"
+              className="profile-btn"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {number > 0 && <div className="notification">{number}</div>}
+              <span>Profile</span>
+            </Link>
+          ) : (
+            <>
+              <a href="/sign-in" className="login-btn">
+                Sign in
+              </a>
+              <a href="/sign-up" className="register-btn">
+                Sign up
+              </a>
+            </>
+          )}
         </div>
       </div>
     </nav>

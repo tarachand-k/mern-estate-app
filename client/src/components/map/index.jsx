@@ -8,12 +8,12 @@ function Map({ items, scrollWheelZoom = false }) {
   const position =
     items.length === 1
       ? [items[0]?.latitude, items[0]?.longitude]
-      : [52.4797, -1.90269];
+      : [40.134279, -116.375684];
   return (
     <MapContainer
       className="map-container"
       center={position}
-      zoom={7}
+      zoom={3}
       scrollWheelZoom={scrollWheelZoom}
     >
       <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />

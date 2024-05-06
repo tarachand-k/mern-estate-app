@@ -28,6 +28,10 @@
       gap: 24px;
       cursor: pointer;
 
+      &.unseen {
+        background-color: #f7c14b85;
+      }
+
       .user {
         display: flex;
         align-items: center;
@@ -44,6 +48,14 @@
         object-fit: cover;
         border-radius: 50%;
       }
+    }
+
+    @include md {
+      flex: none;
+      height: 350px;
+      overflow-y: auto;
+      padding-right: 0px;
+      padding-bottom: 32px;
     }
   }
 

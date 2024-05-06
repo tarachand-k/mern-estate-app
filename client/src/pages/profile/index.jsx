@@ -78,7 +78,7 @@ function Profile() {
                 errorElement={<p>Error loading your posts!</p>}
               >
                 {(postResponse) => (
-                  <List posts={postResponse.data.savedPosts} />
+                  <List posts={postResponse.data.savedPosts} type={"save"} />
                 )}
               </Await>
             </Suspense>
@@ -87,14 +87,7 @@ function Profile() {
       </div>
       <div className="chat-box">
         <div className="wrapper">
-          <Suspense fallback={<p>Loading...</p>}>
-            <Await
-              resolve={data.chatResponse}
-              errorElement={<p>Error loading your chats!</p>}
-            >
-              {(chatResponse) => <Chat chats={chatResponse.data.chats} />}
-            </Await>
-          </Suspense>
+          <Chat />
         </div>
       </div>
     </div>

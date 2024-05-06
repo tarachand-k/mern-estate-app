@@ -1,10 +1,13 @@
 import Card from "../card";
 import "./index.scss";
 
-function List({ posts }) {
+function List({ posts, type = "post" }) {
   if (posts.length === 0)
     return (
-      <p>No post created yet. Click on `Create New Post` button to create</p>
+      <p>
+        No post {type === "save" ? "saved" : "created"} yet!{" "}
+        {type === "post" && "Click on 'Create New Post' button to create"}
+      </p>
     );
 
   return (

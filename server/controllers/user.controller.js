@@ -67,6 +67,31 @@ export const getProfilePosts = async (req, res) => {
   }
 };
 
+export const getNotification = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const number = await prisma.chat.count({
+      where: {
+        userIDs: {
+          hasSome: [userId],
+        },
+        NOT: {
+          seenBy: {
+            hasSome: [userId],
+          },
+        },
+      },
+    });
+    res.status(200).json({ success: true, number });
+  } catch (err) {
+    console.log(err);
+    res
+      .status(500)
+      .json({ success: false, message: "Failed to get notification" });
+  }
+};
+
 export const updateUser = async (req, res) => {
   const { id } = req.params;
 
