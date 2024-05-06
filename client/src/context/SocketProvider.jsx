@@ -9,7 +9,7 @@ function SocketProvider({ children }) {
   const { user } = useAuth();
 
   useEffect(() => {
-    setSocket(io.connect("http://localhost:4000"));
+    setSocket(io.connect("https://estate-socket-server.onrender.com"));
   }, []);
 
   useEffect(() => {
