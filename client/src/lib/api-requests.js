@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "http://localhost:8800/api",
+  baseURL: "https://mern-estate-app-f72z.onrender.com/api",
   withCredentials: true,
 });
