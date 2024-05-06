@@ -42,7 +42,7 @@ function Chat() {
     }
 
     if (currChat && socket) {
-      socket.on("getMessage", (data) => {
+      socket?.on("getMessage", (data) => {
         if (currChat?.id === data?.chatId) {
           console.log(data);
           setCurrChat((curr) => {
@@ -53,7 +53,7 @@ function Chat() {
       });
     }
 
-    return () => socket.off("getMessage");
+    return () => socket?.off("getMessage");
   }, [socket, currChat]);
 
   useEffect(() => {
@@ -107,7 +107,7 @@ function Chat() {
       event.target.reset();
 
       console.log(currChat);
-      socket.emit("sendMessage", {
+      socket?.emit("sendMessage", {
         recieverId: currChat.reciever.id,
         data: res.data.message,
       });
