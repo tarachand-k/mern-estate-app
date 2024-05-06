@@ -14,60 +14,60 @@ import {
   singalPageLoader,
 } from "./lib/loaders";
 
+const router = createBrowserRouter([
+  {
+    path: "/",
+    // element: ,
+    element: <Layout />,
+    children: [
+      {
+        path: "/",
+        element: <Home />,
+      },
+      {
+        path: "/listings",
+        element: <Listings />,
+        loader: listingsLoader,
+      },
+      {
+        path: "/:id",
+        element: <SingalPage />,
+        loader: singalPageLoader,
+      },
+      {
+        path: "/sign-in",
+        element: <Login />,
+      },
+      {
+        path: "/sign-up",
+        element: <Register />,
+      },
+
+      {},
+    ],
+  },
+  {
+    path: "/",
+    element: <ProtectedLayout />,
+    children: [
+      {
+        path: "/profile",
+        element: <Profile />,
+        loader: profilePageLoader,
+      },
+      {
+        path: "/profile/update",
+        element: <ProfileUpdatePage />,
+      },
+      {
+        path: "/create-post",
+        element: <CreaetPost />,
+      },
+    ],
+  },
+]);
+
 function App() {
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      // element: ,
-      element: <Layout />,
-      children: [
-        {
-          path: "/",
-          element: <Home />,
-        },
-        {
-          path: "/listings",
-          element: <Listings />,
-          loader: listingsLoader,
-        },
-        {
-          path: "/:id",
-          element: <SingalPage />,
-          loader: singalPageLoader,
-        },
-        {
-          path: "/sign-in",
-          element: <Login />,
-        },
-        {
-          path: "/sign-up",
-          element: <Register />,
-        },
-
-        {},
-      ],
-    },
-    {
-      path: "/",
-      element: <ProtectedLayout />,
-      children: [
-        {
-          path: "/profile",
-          element: <Profile />,
-          loader: profilePageLoader,
-        },
-        {
-          path: "/profile/update",
-          element: <ProfileUpdatePage />,
-        },
-        {
-          path: "/create-post",
-          element: <CreaetPost />,
-        },
-      ],
-    },
-  ]);
-
   return <RouterProvider router={router} />;
 }
 
