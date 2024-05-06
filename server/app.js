@@ -17,8 +17,6 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(cors({ origin: true, credentials: true }));
 
-console.log(process.env.CLIENT_URL);
-
 app.use("/api/auth", authRouter);
 app.use("/api/test", testRouter);
 app.use("/api/users", userRouter);

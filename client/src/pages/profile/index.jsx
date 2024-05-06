@@ -6,6 +6,7 @@ import Chat from "../../components/chat";
 import List from "../../components/list";
 import apiRequest from "../../lib/api-requests";
 import { useAuth } from "../../context/AuthProvider";
+import Loader from "../../components/loader";
 
 function Profile() {
   const [isLoading, setIsLoading] = useState(false);
@@ -59,7 +60,7 @@ function Profile() {
                 <button>Create New Post</button>
               </Link>
             </div>
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<Loader />}>
               <Await
                 resolve={data.postResponse}
                 errorElement={<p>Error loading your posts!</p>}
@@ -72,7 +73,7 @@ function Profile() {
             <div className="title">
               <h2>Saved List</h2>
             </div>
-            <Suspense fallback={<p>Loading...</p>}>
+            <Suspense fallback={<Loader />}>
               <Await
                 resolve={data.postResponse}
                 errorElement={<p>Error loading your posts!</p>}

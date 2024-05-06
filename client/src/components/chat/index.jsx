@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthProvider";
 import apiRequests from "../../lib/api-requests";
 import { useSocket } from "../../context/SocketProvider";
 import { useNotificationStore } from "../../lib/notification-store";
+import Loader from "../loader";
 
 function Chat() {
   const [chats, setChats] = useState(null);
@@ -115,7 +116,7 @@ function Chat() {
     }
   }
 
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading) return <Loader />;
 
   return (
     <div className="chat">

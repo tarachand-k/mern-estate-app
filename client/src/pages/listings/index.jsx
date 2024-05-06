@@ -4,6 +4,7 @@ import Card from "../../components/card";
 import Map from "../../components/map";
 import { Await, useLoaderData } from "react-router-dom";
 import { Suspense } from "react";
+import Loader from "../../components/loader";
 
 function Listings() {
   const { postResponse } = useLoaderData();
@@ -13,7 +14,7 @@ function Listings() {
       <div className="list-content-box">
         <div className="wrapper">
           <Filter />
-          <Suspense fallback={<p>Loading...</p>}>
+          <Suspense fallback={<Loader />}>
             <Await
               resolve={postResponse}
               errorElement={<p>Error loading posts</p>}
@@ -29,7 +30,7 @@ function Listings() {
         </div>
       </div>
       <div className="map-box">
-        <Suspense fallback={<p>Loading...</p>}>
+        <Suspense fallback={<Loader />}>
           <Await
             resolve={postResponse}
             errorElement={<p>Error loading posts</p>}

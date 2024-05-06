@@ -7,6 +7,7 @@ import Map from "../../components/map";
 import { useAuth } from "../../context/AuthProvider";
 import apiRequests from "../../lib/api-requests";
 import { useState } from "react";
+import Loader from "../../components/loader";
 
 function SingalPage() {
   const { post } = useLoaderData();
@@ -51,6 +52,7 @@ function SingalPage() {
   return (
     <div className="singal-page">
       <div className="details">
+        {!post && <Loader />}
         <div className="wrapper">
           <Slider images={post.images} />
           <div className="info">
@@ -78,6 +80,7 @@ function SingalPage() {
         </div>
       </div>
       <div className="features">
+        {!post && <Loader />}
         <div className="wrapper">
           <div className="feature-box">
             <h2 className="title">General</h2>
