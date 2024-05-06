@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export default axios.create({
-  baseURL: "https://mern-estate-app.vercel.app/api",
+  baseURL: "http://localhost:8800/api",
   withCredentials: true,
 });
