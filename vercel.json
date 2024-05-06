@@ -1,5 +1,5 @@
 {
-  "buildCommand": "cd client && npm install && npm run build && cd .. && cd server && npm install && prisma generate && node app.js",
+  "buildCommand": "cd client && npm install && npm run build && cd .. && cd server && npm install && npm run postinstall && node app.js",
   "outputDirectory": "client/dist",
   "framework": "vite",
   "rewrites": [
