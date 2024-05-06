@@ -23,14 +23,14 @@ function Navbar() {
   return (
     <nav className="navbar">
       <div className="left">
-        <a className="logo">
+        <Link to="/" className="logo">
           <img src="/logo.png" alt="logo" />
           <span>Estate</span>
-        </a>
-        <a href="/">Home</a>
-        <a href="/">About</a>
-        <a href="/">Contact</a>
-        <a href="/">Agents</a>
+        </Link>
+        <Link to="/">Home</Link>
+        <Link to="/">About</Link>
+        <Link to="/">Contact</Link>
+        <Link to="/">Agents</Link>
       </div>
       <div className="right">
         {user ? (
@@ -46,22 +46,22 @@ function Navbar() {
           </>
         ) : (
           <>
-            <a href="/sign-in" className="login-btn">
+            <Link to="/sign-in" className="login-btn">
               Sign in
-            </a>
-            <a href="/sign-up" className="register-btn">
+            </Link>
+            <Link to="/sign-up" className="register-btn">
               Sign up
-            </a>
+            </Link>
           </>
         )}
         <div className="menuIcon" onClick={handleToggleMenu}>
           <img src="/menu.png" alt="Menu icon" />
         </div>
         <div className={`menu ${isMenuOpen ? "open" : undefined}`}>
-          <a href="/">Home</a>
-          <a href="/">About</a>
-          <a href="/">Contact</a>
-          <a href="/">Agents</a>
+          <Link to="/">Home</Link>
+          <Link to="/">About</Link>
+          <Link to="/">Contact</Link>
+          <Link to="/">Agents</Link>
           {user ? (
             <Link
               to="/profile"
@@ -73,12 +73,12 @@ function Navbar() {
             </Link>
           ) : (
             <>
-              <a href="/sign-in" className="login-btn">
+              <Link to="/sign-in" className="login-btn">
                 Sign in
-              </a>
-              <a href="/sign-up" className="register-btn">
+              </Link>
+              <Link to="/sign-up" className="register-btn">
                 Sign up
-              </a>
+              </Link>
             </>
           )}
         </div>
