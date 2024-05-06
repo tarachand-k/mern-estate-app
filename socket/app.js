@@ -2,7 +2,7 @@ import { Server } from "socket.io";
 
 const io = new Server({
   cors: {
-    origin: "http://localhost:5173",
+    origin: "https://mern-estate-app-f72z.onrender.com",
   },
 });
 io.listen(4000);
