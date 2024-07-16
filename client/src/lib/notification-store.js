@@ -4,7 +4,9 @@ import apiRequest from "./api-requests";
 export const useNotificationStore = create((set) => ({
   number: 0,
   fetch: async function () {
-    const res = await apiRequest("/users/notification");
+    const res = await apiRequest("/users/notification", {
+      withCredentials: true,
+    });
     set({ number: res.data.number });
   },
   decrease: () => {
